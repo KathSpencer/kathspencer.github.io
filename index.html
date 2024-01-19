@@ -8,43 +8,71 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
+      background: #f0f0f0; /* Set a light background color */
     }
 
     header {
-      background: radial-gradient(ellipse at center, #ff6b6b 0%, #000 100%);
-      padding: 40px;
-      text-align: center;
+      position: relative;
+      overflow: hidden;
+      height: 300px; /* Adjusted height for the banner */
+    }
+
+    .sky {
+      background: linear-gradient(135deg, #87CEEB, #1E90FF);
+      height: 60%;
+    }
+
+    .sun {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #FFD700;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+
+    .ground {
+      background: linear-gradient(90deg, #228B22, #008000);
+      height: 40%;
     }
 
     h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: #fff;
-      font-size: 4em;
-      margin-bottom: 20px;
+      font-size: 3em;
+      margin: 0;
     }
 
     nav {
       position: absolute;
       top: 20px;
-      left: 20px;
-      background: #333;
-      padding: 10px;
+      right: 20px;
+      display: flex;
     }
 
     nav a {
-      color: #fff;
+      color: #333;
       text-decoration: none;
-      padding: 10px;
-      display: inline-block;
-      margin-right: 10px;
+      padding: 15px 20px;
+      display: block;
     }
 
     section {
-      padding: 40px;
+      padding: 20px;
     }
 
     @media (max-width: 768px) {
       h1 {
-        font-size: 2.5em;
+        font-size: 2em;
+      }
+
+      nav {
+        position: static;
+        margin-top: 20px;
       }
     }
   </style>
@@ -52,12 +80,15 @@
 <body>
 
   <header>
+    <div class="sky"></div>
+    <div class="sun"></div>
+    <div class="ground"></div>
+    <h1>Your Website Title</h1>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
-    <h1>Your Website Title</h1>
   </header>
 
   <section id="home">
@@ -77,3 +108,4 @@
 
 </body>
 </html>
+
