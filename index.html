@@ -8,33 +8,35 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: #f0f0f0; /* Set a light background color */
+      background: #2C3E50; /* Set a moody background color */
+      overflow: hidden; /* Hide overflow to prevent scrolling */
     }
 
     header {
       position: relative;
       overflow: hidden;
-      height: 300px; /* Adjusted height for the banner */
+      height: 400px; /* Adjusted height for the banner */
+      background: linear-gradient(to bottom, #34495E, #283747); /* Moody sky gradient */
     }
 
-    .sky {
-      background: linear-gradient(135deg, #87CEEB, #1E90FF);
-      height: 60%;
-    }
-
-    .sun {
+    .mountains {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #FFD700;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #4E6C84; /* Mountain color */
+      clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%); /* Triangle shape for mountains */
     }
 
-    .ground {
-      background: linear-gradient(90deg, #228B22, #008000);
-      height: 40%;
+    .tree {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 80px;
+      background: #228B22; /* Forest green color */
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Triangle shape for tree */
     }
 
     h1 {
@@ -55,7 +57,7 @@
     }
 
     nav a {
-      color: #333;
+      color: #fff;
       text-decoration: none;
       padding: 15px 20px;
       display: block;
@@ -63,6 +65,7 @@
 
     section {
       padding: 20px;
+      color: #fff;
     }
 
     @media (max-width: 768px) {
@@ -80,9 +83,8 @@
 <body>
 
   <header>
-    <div class="sky"></div>
-    <div class="sun"></div>
-    <div class="ground"></div>
+    <div class="mountains"></div>
+    <div class="tree"></div>
     <h1>Your Website Title</h1>
     <nav>
       <a href="#home">Home</a>
@@ -108,4 +110,3 @@
 
 </body>
 </html>
-
