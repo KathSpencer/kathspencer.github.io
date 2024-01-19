@@ -9,14 +9,17 @@
       margin: 0;
       font-family: 'Arial', sans-serif;
       background: #000; /* Set a dark background color for the night sky */
-      overflow: hidden; /* Hide overflow to prevent scrolling */
     }
 
     header {
       position: relative;
       overflow: hidden;
-      height: 400px; /* Adjusted height for the banner */
+      height: 1200px; /* 100% of the viewport height */
       background: linear-gradient(to bottom, #001F3F, #000); /* Dark sky gradient */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .stars {
@@ -31,17 +34,51 @@
       position: absolute;
       background: #fff; /* White color for stars */
       border-radius: 50%; /* Circular shape for stars */
+      pointer-events: none; /* Disable pointer events on stars */
       animation: twinkle 1s infinite alternate;
     }
 
-    h1 {
+    .mouse-trail {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 2px; /* Adjust the width for smaller circles */
+      height: 2px; /* Adjust the height for smaller circles */
+      background: #fff; /* White color for the mouse trail */
+      border-radius: 50%; /* Circular shape for the mouse trail */
+      pointer-events: none; /* Disable pointer events on the mouse trail */
+      animation: fadeOut 0.5s forwards;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: 0.4;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    h1, h2 {
       color: #fff;
-      font-size: 3em;
       margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    h2 {
+      font-size: 2em;
     }
 
     nav {
@@ -49,18 +86,14 @@
       top: 20px;
       right: 20px;
       display: flex;
+      z-index: 2;
     }
 
     nav a {
       color: #fff;
       text-decoration: none;
       padding: 15px 20px;
-      display: block;
-    }
-
-    section {
-      padding: 20px;
-      color: #fff;
+      font-size: 1.2em;
     }
 
     @media (max-width: 768px) {
@@ -68,72 +101,90 @@
         font-size: 2em;
       }
 
+      h2 {
+        font-size: 1.5em;
+      }
+
       nav {
-        position: static;
-        margin-top: 20px;
+        position: absolute;
+        right: 50%;
+        transform: translate(50%, -50%);
       }
     }
+
   </style>
 </head>
 <body>
 
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
   <header>
+    <!-- Content for the banner goes here -->
     <div class="stars"></div>
+    <div class="mouse-trail"></div>
     <h1>Your Website Title</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <h2>Explore the wonders of the night sky!</h2>
   </header>
-
-  <section id="home">
-    <h2>Home Section</h2>
-    <p>Your content goes here.</p>
-  </section>
-
-  <section id="about">
-    <h2>About Section</h2>
-    <p>Your content goes here.</p>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Section</h2>
-    <p>Your content goes here.</p>
-  </section>
 
   <script>
     // Generate stars dynamically with random delays
     const starsContainer = document.querySelector('.stars');
+    const mouseTrail = document.querySelector('.mouse-trail');
+    let prevMouseX, prevMouseY;
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       star.style.top = `${Math.random() * 100}%`;
       star.style.left = `${Math.random() * 100}%`;
-      star.style.width = `${Math.random() * 2}px`;
+      star.style.width = `${Math.random() * 2.5}px`;
       star.style.height = star.style.width;
       star.style.animationDelay = `${Math.random() * 5}s`; // Random delay between 0 and 5 seconds
       starsContainer.appendChild(star);
     }
 
-    // Function to update star trail based on mouse movement
-    function updateStarTrail(event) {
+    // Function to update mouse trail based on mouse movement
+    function updateMouseTrail(event) {
       const trail = document.createElement('div');
-      trail.className = 'star';
-      trail.style.top = `${event.clientY}px`;
-      trail.style.left = `${event.clientX}px`;
-      starsContainer.appendChild(trail);
+      trail.className = 'mouse-trail';
 
-      // Remove trails after a short delay
+      // Calculate distance from previous mouse position
+      const distance = Math.hypot(event.clientX - prevMouseX, event.clientY - prevMouseY);
+      
+      // Set a smaller distance between circles
+      const minDistance = 5; // Adjust this value for the desired distance
+      if (distance > minDistance) {
+        trail.style.top = `${event.clientY}px`;
+        trail.style.left = `${event.clientX}px`;
+        document.body.appendChild(trail);
+
+        // Update previous mouse position
+        prevMouseX = event.clientX;
+        prevMouseY = event.clientY;
+      }
+
+      // Remove trails after a short delay to make it denser
       setTimeout(() => {
         trail.remove();
-      }, 1000);
+      }, 200);
     }
 
     // Listen for mouse movement
-    document.addEventListener('mousemove', updateStarTrail);
+    document.addEventListener('mousemove', (event) => {
+      // Initialize previous mouse position on the first mousemove event
+      if (prevMouseX === undefined || prevMouseY === undefined) {
+        prevMouseX = event.clientX;
+        prevMouseY = event.clientY;
+      }
+
+      updateMouseTrail(event);
+    });
   </script>
 
 </body>
 </html>
+
